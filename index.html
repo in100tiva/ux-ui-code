@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma de Cursos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        .navbar button {
+            padding: 8px 16px;
+            margin: 5px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            flex: 1 1 20%; /* Makes sure buttons flex according to space available */
+        }
+        .navbar button:hover {
+            background-color: #0056b3;
+        }
+        .lesson {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .lesson h2 {
+            color: #333;
+        }
+        .lesson h3 {
+            color: #555;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                
+                align-items: center;
+            }
+            .navbar button {
+                flex-basis: calc(50% - 12px); /* Adjusting for margin */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script type="text/javascript">
+        const schedule = [
+            {
+                title: "Aula 1: Introdução às Plataformas e Conceitos Básicos",
+                topics: [
+                    { title: "UX Design", description: "Introdução ao UX Design, vídeos introdutórios, reflexão sobre experiência do usuário." },
+                    { title: "UI Design", description: "Introdução ao UI Design, vídeos introdutórios, análise de interfaces." },
+                    { title: "GitHub", description: "Introdução ao GitHub, criação de conta, instalação do Git, configuração inicial." },
+                    { title: "HTML & CSS", description: "Introdução ao HTML, estrutura básica de uma página, importância da semântica para SEO." }
+                ]
+            },
+            {
+                title: "Aula 2: Elementos e Comandos Básicos",
+                topics: [
+                    { title: "UX Design", description: "Estudo dos princípios de design, exercícios práticos de usabilidade." },
+                    { title: "UI Design", description: "Estudo e prática com elementos visuais, como tipografia e esquemas de cores." },
+                    { title: "GitHub", description: "Comandos básicos do Git, prática com git add, git commit." },
+                    { title: "HTML & CSS", description: "Elementos HTML para landing pages, prática com elementos multimídia." }
+                ]
+            },
+            {
+                title: "Aula 3: Ferramentas e Métodos de Pesquisa/Desenvolvimento",
+                topics: [
+                    { title: "UX Design", description: "Métodos de pesquisa UX, elaboração de planos de pesquisa." },
+                    { title: "UI Design", description: "Layout e estrutura, uso de grid systems, estudos de caso." },
+                    { title: "GitHub", description: "Trabalho com branches, prática com git merge, git checkout." },
+                    { title: "HTML & CSS", description: "Introdução ao CSS, aplicação de estilos básicos, cascata e especificidade." }
+                ]
+            },
+            {
+                title: "Aula 4: Design Interativo e Colaboração",
+                topics: [
+                    { title: "UX Design", description: "Design de interação, criação de wireframes, importância do feedback." },
+                    { title: "UI Design", description: "Ícones e botões, prática de design de elementos interativos." },
+                    { title: "GitHub", description: "GitHub Issues e Forks, contribuição para projetos públicos." },
+                    { title: "HTML & CSS", description: "Layouts avançados com CSS, prática com Flexbox e Grid." }
+                ]
+            },
+            {
+                title: "Aula 5: Testes, Animações e Funcionalidades Avançadas",
+                topics: [
+                    { title: "UX Design", description: "Testes de usabilidade, análise de feedback, documentação de resultados." },
+                    { title: "UI Design", description: "Interação e animação, prática com animações CSS." },
+                    { title: "GitHub", description: "Pull Requests e Code Reviews, prática de revisão de código." },
+                    { title: "HTML & CSS", description: "Estilos avançados em CSS, implementação de animações e transições." }
+                ]
+            },
+            {
+                title: "Aula 6: Análise e Aplicação Prática",
+                topics: [
+                    { title: "UX Design", description: "Análise e melhoria contínua, revisão de projetos, sessão de relaxamento." },
+                    { title: "UI Design", description: "Prototipagem e feedback, desenvolvimento de protótipos interativos." },
+                    { title: "GitHub", description: "Exploração de GitHub Actions e Pages, automatização de processos." },
+                    { title: "HTML & CSS", description: "Formulários HTML e captura de leads, acessibilidade em formulários." }
+                ]
+            },
+            {
+                title: "Aula 7: SEO e Performance",
+                topics: [
+                    { title: "UX Design", description: "Aplicação prática e estudo de caso, desenvolvimento de um mini projeto." },
+                    { title: "UI Design", description: "Revisão e apresentação, ajustes finais e feedback." },
+                    { title: "GitHub", description: "Projeto final com revisão e aplicação de todos os conceitos aprendidos." },
+                    { title: "HTML & CSS", description: "SEO básico para HTML, CSS para SEO e performance, análise de ferramentas de teste." }
+                ]
+            },
+            {
+                title: "Aula 8: Projeto Final e Revisão",
+                topics: [
+                    { title: "Todos os cursos", description: "Desenvolvimento e finalização de um projeto prático que integra todos os conceitos estudados, revisão dos aprendizados e ajustes finais." }
+                ]
+            }
+        ];
+
+        function Navbar({ onChangeLesson }) {
+            return React.createElement("div", { className: "navbar" },
+                schedule.map((_, i) =>
+                    React.createElement("button", { key: i, onClick: () => onChangeLesson(i + 1) }, `Aula ${i + 1}`)
+                )
+            );
+        }
+
+        function Lesson({ lessonData }) {
+            return React.createElement("div", { className: "lesson" },
+                React.createElement("h2", null, lessonData.title),
+                lessonData.topics.map((topic, index) =>
+                    React.createElement("div", { key: index },
+                        React.createElement("h3", null, topic.title),
+                        React.createElement("p", null, topic.description)
+                    )
+                )
+            );
+        }
+
+        function App() {
+            const [currentLesson, setCurrentLesson] = React.useState(1);
+            return React.createElement("div", { className: "App" },
+                React.createElement(Navbar, { onChangeLesson: setCurrentLesson }),
+                React.createElement(Lesson, { lessonData: schedule[currentLesson - 1] })
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(App));
+    </script>
+</body>
+</html>
